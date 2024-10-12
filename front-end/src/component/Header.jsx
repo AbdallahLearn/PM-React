@@ -49,7 +49,7 @@ function Header() {
             className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow "
           >
             <li>
-              <Link to="/">الرئيسية</Link>
+              <Link to="/Home">الرئيسية</Link>
             </li>
             {usersInfo.usertype == "user" ? (
               <li>
@@ -95,7 +95,7 @@ function Header() {
         <div className="hidden lg:flex">
           <ul className="menu menu-horizontal px-1">
             <li>
-              <Link to="/">الرئيسية</Link>
+              <Link to="/Home">الرئيسية</Link>
             </li>
             {usersInfo.usertype == "user" ? (
               <li>
