@@ -42,10 +42,7 @@ function Footer() {
       </nav>
       <aside>
         <p>
-          {/* Copyright ©  */}
           جميع الحقوق محفوظة - {new Date().getFullYear()}
-          {/* All right reserved  */}
-          {/* by ACME Industries Ltd */}
         </p>
       </aside>
     </footer>

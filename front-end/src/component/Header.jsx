@@ -57,7 +57,7 @@ function Header() {
               </li>
             ) : (
               <li>
-                <Link to="">الطلاب</Link>
+                <Link to="/students">الطلاب</Link>
               </li>
             )}
             <div className="divider py-0 my-0"></div>
@@ -101,7 +101,7 @@ function Header() {
               </li>
             ) : (
               <li>
-                <Link to="">الطلاب</Link>
+                <Link to="/students">الطلاب</Link>
               </li>
             )}
           </ul>
