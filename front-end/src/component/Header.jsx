@@ -69,7 +69,7 @@ function Header() {
                       alt="user icon"
                       className="w-[70%] h-[70%]"
                       src={`${
-                        usersInfo.usertype == "user"                        
+                        usersInfo.usertype == "user"
                           ? "https://cdn-icons-png.freepik.com/256/16568/16568321.png?uid=R162205891&ga=GA1.1.1807813655.1726087175"
                           : "https://cdn-icons-png.freepik.com/256/13648/13648582.png?uid=R162205891&ga=GA1.1.1807813655.1726087175"
                       }`}
@@ -79,7 +79,9 @@ function Header() {
                 <p className="text-sm">{usersInfo.name}</p>
               </div>
               <li>
-                <p className="text-red-700">تسجيل الخروج</p>
+                <Link to="">
+                  <p className="text-red-700">تسجيل الخروج</p>
+                </Link>
               </li>
             </li>
           </ul>
@@ -92,10 +94,10 @@ function Header() {
         </div>
         <div className="hidden lg:flex">
           <ul className="menu menu-horizontal px-1">
-          <li>
+            <li>
               <Link to="/">الرئيسية</Link>
             </li>
-          {usersInfo.usertype == "user" ? (
+            {usersInfo.usertype == "user" ? (
               <li>
                 <Link to="">أفكاري</Link>
               </li>
@@ -110,29 +112,33 @@ function Header() {
 
       <div className="hidden lg:flex navbar-end ml-3 gap-2">
         <div className="dropdown dropdown-end">
-          <div tabIndex={0} role="button" className="btn btn-ghost btn-circle ">
+          <div tabIndex={0} role="button" className="btn btn-ghost px-4">
             <div className="w-9 h-9 min-h-9 rounded-full bg-gray-100 flex justify-center items-center">
               <img
                 alt="user icon"
                 className="w-[80%] h-[80%]"
                 src={`${
-                  usersInfo.usertype == "user"                        
+                  usersInfo.usertype == "user"
                     ? "https://cdn-icons-png.freepik.com/256/16568/16568321.png?uid=R162205891&ga=GA1.1.1807813655.1726087175"
                     : "https://cdn-icons-png.freepik.com/256/13648/13648582.png?uid=R162205891&ga=GA1.1.1807813655.1726087175"
                 }`}
               />
             </div>
+            <p className="text-sm">{usersInfo.name}</p>
           </div>
           <ul
             tabIndex={0}
-            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-36 p-2 shadow-white shadow-sm"
           >
             <li>
-              <a>تسجيل الخروج</a>
+              <div className="flex justify-center items-center">
+                <Link to="" className="text-red-700">
+                  تسجيل الخروج
+                </Link>
+              </div>
             </li>
           </ul>
         </div>
-        <p className="text-sm">{usersInfo.name}</p>
       </div>
     </div>
   );
