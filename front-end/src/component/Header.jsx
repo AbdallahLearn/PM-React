@@ -61,28 +61,28 @@ function Header() {
               </li>
             )}
             <div className="divider py-0 my-0"></div>
-            <li>
-              <div className="flex w-full justify-start items-center h-8 px-0">
-                <div role="button" className="btn btn-ghost btn-circle">
-                  <div className="w-7 h-7 min-h-7 rounded-full bg-white flex justify-center items-center">
-                    <img
-                      alt="user icon"
-                      className="w-[70%] h-[70%]"
-                      src={`${
-                        usersInfo.usertype == "user"
-                          ? "https://cdn-icons-png.freepik.com/256/16568/16568321.png?uid=R162205891&ga=GA1.1.1807813655.1726087175"
-                          : "https://cdn-icons-png.freepik.com/256/13648/13648582.png?uid=R162205891&ga=GA1.1.1807813655.1726087175"
-                      }`}
-                    />
-                  </div>
+            <div className="flex w-full justify-start items-center h-8 px-0">
+              <div role="button" className="btn btn-ghost btn-circle">
+                <div className="w-7 h-7 min-h-7 rounded-full bg-white flex justify-center items-center">
+                  <img
+                    alt="user icon"
+                    className="w-[70%] h-[70%]"
+                    src={`${
+                      usersInfo.usertype == "user"
+                        ? "https://cdn-icons-png.freepik.com/256/16568/16568321.png?uid=R162205891&ga=GA1.1.1807813655.1726087175"
+                        : "https://cdn-icons-png.freepik.com/256/13648/13648582.png?uid=R162205891&ga=GA1.1.1807813655.1726087175"
+                    }`}
+                  />
                 </div>
-                <p className="text-sm">{usersInfo.name}</p>
               </div>
-              <li>
-                <Link to="">
-                  <p className="text-red-700">تسجيل الخروج</p>
+              <p className="text-sm">{usersInfo.name}</p>
+            </div>
+            <li>
+              <div className="flex justify-center items-center">
+                <Link to="" className="text-red-700">
+                  تسجيل الخروج
                 </Link>
-              </li>
+              </div>
             </li>
           </ul>
         </div>

@@ -15,7 +15,7 @@ function Students() {
       .then(function (response) {
         // handle success
         console.log(response.data);
-        setusersInfo(response.data.filter((user)=>user.usertype == "user"));
+        setusersInfo(response.data.filter((user) => user.usertype == "user"));
       })
       .catch(function (error) {
         // handle error
@@ -35,7 +35,7 @@ function Students() {
       setUserDetails(null);
     });
   };
-  
+
   useEffect(() => {
     getUsersInfo();
   }, []);
@@ -91,95 +91,100 @@ function Students() {
         <div className="overflow-x-auto w-[60%] max-sm:w-[95%]">
           <table className="table bg-gray-700 rounded-xl text-white overflow-hidden">
             <tbody>
-              {
-                searchedUser.length > 0 ? (
-                  searchedUser.map((user, index) => {
-                    return (
-                      <tr key={index} className="hover:bg-gray-600">
-                        <td className="w-[90%]">
-                          <div className="flex justify-start items-center gap-3">
-                            <div className="w-8 h-8 min-h-8 rounded-full bg-white flex justify-center items-center">
-                              <img
-                                alt="user icon"
-                                className="w-[70%] h-[70%]"
-                                src="https://cdn-icons-png.freepik.com/256/16568/16568321.png?uid=R162205891&ga=GA1.1.1807813655.1726087175"
-                              />
-                            </div>
-                            <div className="flex flex-col ">
-                              <p>{user.name}</p>
-                              <p className="text-[0.7rem] text-gray-300">
-                                {user.email}
-                              </p>
-                            </div>
+              {searchedUser.length > 0 ? (
+                searchedUser.map((user, index) => {
+                  return (
+                    <tr key={index} className="hover:bg-gray-600">
+                      <td className="w-[90%]">
+                        <div className="flex justify-start items-center gap-3">
+                          <div className="w-8 h-8 min-h-8 rounded-full bg-white flex justify-center items-center">
+                            <img
+                              alt="user icon"
+                              className="w-[70%] h-[70%]"
+                              src="https://cdn-icons-png.freepik.com/256/16568/16568321.png?uid=R162205891&ga=GA1.1.1807813655.1726087175"
+                            />
                           </div>
-                        </td>
-                        <td className="w-[10%]">
-                          <div className="dropdown dropdown-left">
-                            <div className="btn w-10 h-10 min-h-10 btn-circle bg-transparent border-none shadow-none hover:bg-gray-400">
-                            
-                                <button
-                                  onClick={() => {
-                                    setUserDetails(user),
-                                      document
-                                        .getElementById("deleteModal")
-                                        .showModal();
-                                  }}
-                                >
-                                  <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    height="24px"
-                                    viewBox="0 -960 960 960"
-                                    width="24px"
-                                    fill="#b91c1c"
-                                  >
-                                    <path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z" />
-                                  </svg>
-                                </button>   
-                                </div>                           
+                          <div className="flex flex-col ">
+                            <p>{user.name}</p>
+                            <p className="text-[0.7rem] text-gray-300">
+                              {user.email}
+                            </p>
                           </div>
-                          {userDetails && (
-                            <dialog
-                              id="deleteModal"
-                              className="modal modal-bottom sm:modal-middle overflow-x-hidden z-50"
+                        </div>
+                      </td>
+                      <td className="w-[10%]">
+                        <div className="dropdown dropdown-left">
+                          <div className="btn w-10 h-10 min-h-10 btn-circle bg-transparent border-none shadow-none hover:bg-gray-400">
+                            <button
+                              onClick={() => {
+                                setUserDetails(user),
+                                  document
+                                    .getElementById("deleteModal")
+                                    .showModal();
+                              }}
                             >
-                              <div className="modal-box shadow-gray-400 shadow-sm">
-                                <p className="py-4 text-center text-lg">
-                                  هل أنت متأكد من حذف الطالب  {"  "}
-                                  <span className="font-bold">{userDetails.name}</span>
-                                  ؟
-                                </p>
-                                <div className="flex justify-center items-center pt-8 gap-3">
-                                  <button
-                                    onClick={() => handleDeleteButton(userDetails.id)}
-                                    className="btn w-20 text-white bg-red-700 hover:bg-gray-400"
-                                  >
-                                    حذف
-                                  </button>
-                                  <button
-                                    onClick={() =>
-                                      document
-                                        .getElementById("deleteModal")
-                                        .close()
-                                    }
-                                    className="btn w-20 text-white bg-gray-600 hover:bg-gray-400"
-                                  >
-                                    إلغاء
-                                  </button>
-                                </div>
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                height="24px"
+                                viewBox="0 -960 960 960"
+                                width="24px"
+                                fill="#b91c1c"
+                              >
+                                <path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z" />
+                              </svg>
+                            </button>
+                          </div>
+                        </div>
+                        {userDetails && (
+                          <dialog
+                            id="deleteModal"
+                            className="modal modal-bottom sm:modal-middle overflow-x-hidden z-50"
+                          >
+                            <div className="modal-box shadow-gray-400 shadow-sm">
+                              <p className="py-4 text-center text-lg">
+                                هل أنت متأكد من حذف الطالب {"  "}
+                                <span className="font-bold">
+                                  {userDetails.name}
+                                </span>
+                                ؟
+                              </p>
+                              <div className="flex justify-center items-center pt-8 gap-3">
+                                <button
+                                  onClick={() =>
+                                    handleDeleteButton(userDetails.id)
+                                  }
+                                  className="btn w-20 text-white bg-red-700 hover:bg-gray-400"
+                                >
+                                  حذف
+                                </button>
+                                <button
+                                  onClick={() =>
+                                    document
+                                      .getElementById("deleteModal")
+                                      .close()
+                                  }
+                                  className="btn w-20 text-white bg-gray-600 hover:bg-gray-400"
+                                >
+                                  إلغاء
+                                </button>
                               </div>
-                              <form method="dialog" className="modal-backdrop">
-                                <button>close</button>
-                              </form>
-                            </dialog>
-                          )}
-                        </td>
-                      </tr>
-                    );
-                  })
-                ) : (
-                  <p className="text-center text-xl py-4">لايوجد طلاب لعرضهم</p>
-                )
-              }
+                            </div>
+                            <form method="dialog" className="modal-backdrop">
+                              <button>close</button>
+                            </form>
+                          </dialog>
+                        )}
+                      </td>
+                    </tr>
+                  );
+                })
+              ) : (
+                <tr>
+                  <td className="text-center text-lg py-4">
+                    لايوجد طلاب لعرضهم
+                  </td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>
