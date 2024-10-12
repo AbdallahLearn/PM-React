@@ -42,7 +42,7 @@ function Footer() {
       </nav>
       <aside>
         <p>
-          جميع الحقوق محفوظة - {new Date().getFullYear()}
+          جميع الحقوق محفوظة لصالح فريق فكرة - {new Date().getFullYear()}
         </p>
       </aside>
     </footer>

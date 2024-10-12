@@ -1,51 +1,42 @@
-<<<<<<< HEAD
-import React from 'react';
+// import React from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Home from '../component/Home';
 import Students from '../pages/Students';
 import SignIn from '../pages/SignIn'; 
 import SignUp from '../pages/SignUp'; 
+import UserHome from '../component/UserHome'
+import UserProfile from '../component/UserProfile'
+import Error from '../component/Error'
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <SignUp />
+    element: <SignUp />,
+    errorElement: <Error />
   },
   {
-    path: '/SignIn',
+    path: '/signin',
     element: <SignIn />
   },
   {
-    path: '/Home',
+    path: '/home',
     element: <Home />
   },
   {
     path: '/students',
     element: <Students />
   },
+  {
+    path:'/user-home',
+    element:<UserHome />
+  },
+  {
+    path:'/user-profile',
+    element:<UserProfile/>
+  },
 ]);
 
-=======
-import React from 'react'
-import { createBrowserRouter,RouterProvider } from 'react-router-dom'
-import Home from '../component/Home'
-import UserHome from '../component/UserHome'
-import UserProfile from '../component/UserProfile'
-const router = createBrowserRouter([
-    {
-        path:'/',
-        element:<Home/>
-    },
-    {
-      path:'/userHome',
-      element:<UserHome />
-    },
-    {
-      path:'/userProfile',
-      element:<UserProfile/>
-    },
-])
->>>>>>> faraj
+
 function Router() {
   return (
     <div>

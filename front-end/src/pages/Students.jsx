@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Header from "../component/Header";
 import Footer from "../component/Footer";
+import { useNavigate } from "react-router-dom";
 
 import axios from "axios";
 
@@ -9,6 +10,7 @@ function Students() {
   const [searchValue, setSearchValue] = useState("");
   const [usersInfo, setusersInfo] = useState([]);
   const [userDetails, setUserDetails] = useState(null);
+  const navigate = useNavigate();
 
   const getUsersInfo = () => {
     axios
@@ -38,6 +40,12 @@ function Students() {
   };
 
   useEffect(() => {
+    // Check If User Is Logged In //
+    if (localStorage.getItem("userId") === null) {
+      navigate("/signin"); // LogIn
+    };
+    //== Check If User Is Logged In ==//
+
     getUsersInfo();
   }, []);
 

@@ -8,7 +8,7 @@ function Header() {
 
   const getUsersInfo = () => {
     axios
-      .get(`${URL}/3`)
+      .get(`${URL}/${localStorage.getItem("userId")}`)
       .then(function (response) {
         // handle success
         console.log(response.data);
@@ -48,17 +48,27 @@ function Header() {
             tabIndex={0}
             className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow "
           >
-            <li>
-              <Link to="/Home">الرئيسية</Link>
-            </li>
+            
             {usersInfo.usertype == "user" ? (
-              <li>
-                <Link to="">أفكاري</Link>
-              </li>
+              <>
+                <li>
+                  <Link to="/user-home">الرئيسية</Link>
+                </li>
+
+                <li>
+                  <Link to="/user-profile">أفكاري</Link>
+                </li>
+              </>
             ) : (
-              <li>
-                <Link to="/students">الطلاب</Link>
-              </li>
+              <>
+                <li>
+                  <Link to="/home">الرئيسية</Link>
+                </li>
+
+                <li>
+                  <Link to="/students">الطلاب</Link>
+                </li>
+              </>
             )}
             <div className="divider py-0 my-0"></div>
             <div className="flex w-full justify-start items-center h-8 px-0">
@@ -79,33 +89,45 @@ function Header() {
             </div>
             <li>
               <div className="flex justify-center items-center">
-                <Link to="" className="text-red-700">
+                <Link to="/signin" className="text-red-700">
                   تسجيل الخروج
                 </Link>
               </div>
             </li>
           </ul>
         </div>
-        <div className="w-14 h-12 flex justify-center items-center">
-          <img
-            className="h-full"
-            src="https://cdn-icons-png.freepik.com/512/17043/17043983.png"
-          />
+        <div className="flex justify-center items-center">
+          <div className="w-14 h-12 flex justify-center items-center">
+            <img
+              className="h-full"
+              src="https://cdn-icons-png.freepik.com/512/17043/17043983.png"
+            />
+          </div>
+          <p className="font-bold text-white text-xl ml-5">فكرة</p>
         </div>
         <div className="hidden lg:flex">
           <ul className="menu menu-horizontal px-1">
-            <li>
-              <Link to="/Home">الرئيسية</Link>
-            </li>
             {usersInfo.usertype == "user" ? (
-              <li>
-                <Link to="">أفكاري</Link>
-              </li>
-            ) : (
-              <li>
-                <Link to="/students">الطلاب</Link>
-              </li>
-            )}
+                <>
+                  <li>
+                    <Link to="/user-home">الرئيسية</Link>
+                  </li>
+
+                  <li>
+                    <Link to="/user-profile">أفكاري</Link>
+                  </li> 
+                </>
+              ) : (
+                <>
+                  <li>
+                    <Link to="/home">الرئيسية</Link>
+                  </li>
+
+                  <li>
+                    <Link to="/students">الطلاب</Link>
+                  </li>
+                </>
+              )}
           </ul>
         </div>
       </div>
@@ -132,7 +154,7 @@ function Header() {
           >
             <li>
               <div className="flex justify-center items-center">
-                <Link to="" className="text-red-700">
+                <Link to="/signin" className="text-red-700">
                   تسجيل الخروج
                 </Link>
               </div>

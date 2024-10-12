@@ -4,7 +4,15 @@ import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
 function SignIn() {
+
     const navigate = useNavigate();
+
+    // Check If User Is Logged In //
+    if (localStorage.getItem("userId") !== null) {
+        localStorage.removeItem("userId"); // LogIn
+    };
+    //== Check If User Is Logged In ==//
+
     const [user, setUser] = React.useState({ email: '', password: '' });
     const [validity, setValidity] = React.useState({ email: true, password: true });
 
@@ -49,7 +57,11 @@ function SignIn() {
                         showConfirmButton: false,
                         timer: 1500
                     });
-                    navigate('/Home'); 
+                    if (result.usertype == "user") {
+                        navigate('/user-home');
+                    } else {
+                        navigate('/home');
+                    }
                 } else {
                     Swal.fire({
                         icon: 'error',

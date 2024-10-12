@@ -4,7 +4,13 @@ import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2'; 
 
 function SignUp() {
+    
     const navigate = useNavigate();
+    // Check If User Is Logged In //
+    if (localStorage.getItem("userId") !== null) {
+        localStorage.removeItem("userId"); // LogIn
+    };
+    //== Check If User Is Logged In ==//
     const [inputs, setInputs] = React.useState({
         name: '',
         email: '',
@@ -64,7 +70,7 @@ function SignUp() {
         })
         .then((response) => {
             localStorage.setItem('userId', response.data.id);
-            navigate('/SignIn');
+            navigate('/signin');
         })
         .catch((error) => {
             console.error('خطأ:', error);
@@ -83,7 +89,7 @@ function SignUp() {
                     إنشاء حساب جديد
                 </h2>
                 <p className="mt-2 text-center text-sm leading-5 text-gray-400 max-w">
-                    لديك حساب مسبق؟ <Link to="/SignIn" className="font-medium text-[#8f37ff] hover:text-[#6e27c1]">
+                    لديك حساب مسبق؟ <Link to="/signin" className="font-medium text-[#8f37ff] hover:text-[#6e27c1]">
                         سجل دخولك
                     </Link>
                 </p>
