@@ -151,7 +151,7 @@ export default function UserProfile() {
                     {/* Add Idea */}
                     <div className="mb-10">
                         <div className="flex justify-center lg:justify-start items-center">
-                            <h1 onClick={() => { setDisplayIdea("") }} className="text-4xl rounded-lg bg-white text-black w-fit p-3 font-semibold cursor-pointer hover:bg-slate-200">{addUpdate}</h1>
+                            <h1 onClick={() => { setDisplayIdea("") }} className="text-2xl rounded-lg bg-white text-black w-fit p-3 font-semibold cursor-pointer hover:bg-slate-200">{addUpdate}</h1>
                         </div>
 
                         <div className="flex justify-center items-center w-screen h-screen absolute top-0 right-0 bg-black opacity-95 z-10" style={{"display": displayIdea}}>
@@ -166,22 +166,16 @@ export default function UserProfile() {
                             </div>
                         </div>
                     </div>
-                    {/*== Add Idea ==*/}
-
-                    {/* ============================================================================================================================= */}
-                    {/* ============================================================================================================================= */}
-                    {/* ============================================================================================================================= */}
-
-                    {/* Show Ideas */}
+                   
                     <div className="grid grid-cols-1 grid-flow-row gap-10 justify-items-center content-center">
                         <div className="w-full md:w-3/4 lg:w-1/2">
                             <div className="card card-compact shadow-xl">
                                 <div className="card-body rounded-lg" style={{"backgroundColor": bgCard, "display": display}}>
-                                    <h2 className="card-title text-3xl text-white" style={{"backgroundColor": bgCard}}>{users.name}</h2>
+                                    <h2 className="card-title text-2xl  text-white" style={{"backgroundColor": bgCard}}>{users.name}</h2>
                                     
-                                    <p className="w-full p-3 text-center overflow-auto text-white text-4xl font-semibold mt-10" style={{"backgroundColor": bgCard}}>{users.idea}</p>
+                                    <p className="w-full p-3 text-center overflow-auto text-white text-2xl font-bold mt-10" style={{"backgroundColor": bgCard}}>{users.idea}</p>
 
-                                    <p className="w-full p-3 text-center overflow-auto text-white text-4xl font-semibold my-10" style={{"backgroundColor": bgCard}}>{state}</p>
+                                    <p className="w-full p-3 text-center overflow-auto text-white text-xl font-semibold my-10" style={{"backgroundColor": bgCard}}>{state}</p>
 
                                     <div className="card-actions justify-between" style={{"backgroundColor": bgCard}}>
                                         <button onClick={() => {
