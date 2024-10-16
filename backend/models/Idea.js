@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 const ideaSchema = new mongoose.Schema({
-    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }, // Reference to the user who submitted the idea
+    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }, 
     title: {
         type: String,
         required: true,
@@ -15,7 +15,7 @@ const ideaSchema = new mongoose.Schema({
         enum: ['pending', 'accepted', 'rejected'],
         default: 'pending',
     },
-    feedback: String, // Supervisor's feedback
+    feedback: String, 
 }, { timestamps: true });
 
 const Idea = mongoose.model('Idea', ideaSchema);

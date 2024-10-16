@@ -20,7 +20,7 @@ const userSchema = new mongoose.Schema({
         default: 'student',
         required: true,
     },
-    ideas: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Idea' }], // Reference to submitted ideas
+    ideas: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Idea' }],
 });
 
 const User = mongoose.model('User', userSchema);
