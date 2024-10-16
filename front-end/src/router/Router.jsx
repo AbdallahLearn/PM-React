@@ -7,6 +7,7 @@ import SignUp from '../pages/SignUp';
 import UserHome from '../component/UserHome'
 import UserProfile from '../component/UserProfile'
 import Error from '../component/Error'
+import UserIdea from '../pages/UserIdea';
 
 const router = createBrowserRouter([
   {
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
   {
     path:'/user-profile',
     element:<UserProfile/>
+  },
+  {
+    path:'/user-idea/:id',
+    element:<UserIdea/>
   },
 ]);
 

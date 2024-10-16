@@ -42,42 +42,38 @@ function SignIn() {
             return;
         }
 
-        axios.get('https://67092a6aaf1a3998baa09cc6.mockapi.io/users')
-            .then((response) => {
-                const result = response.data.find((item) =>
-                    item.email === user.email && item.password === user.password
-                );
-
-                if (result) {
-                    localStorage.setItem('userId', result.id);
-                    localStorage.setItem('isLoggIn', true);
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'تم تسجيل الدخول بنجاح!',
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
-                    if (result.usertype == "user") {
-                        navigate('/user-home');
-                    } else {
-                        navigate('/home');
-                    }
-                } else {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'خطأ',
-                        text: 'البريد الإلكتروني أو كلمة المرور غير صحيحة',
-                    });
-                }
-            })
-            .catch((error) => {
-                console.error('Error:', error);
+        axios.post('http://localhost:4000/api/users/login', {
+            email: user.email,
+            password: user.password,
+        })
+        .then((response) => {
+            const result = response.data; // Directly use the response data
+            console.log('result', response)
+            if (result) {
+                localStorage.setItem('userId', result.id);
+                localStorage.setItem('username', result.name); // Assuming 'id' is returned
+                localStorage.setItem('isLoggIn', true);
                 Swal.fire({
-                    icon: 'error',
-                    title: 'خطأ',
-                    text: 'حدث خطأ ما.. حاول مرة أخرى لاحقًا',
+                    icon: 'success',
+                    title: 'تم تسجيل الدخول بنجاح!',
+                    showConfirmButton: false,
+                    timer: 1500
                 });
+                if (result.usertype === "user") {
+                    navigate('/user-home');
+                } else {
+                    navigate('/home');
+                }
+            }
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'خطأ',
+                text: 'البريد الإلكتروني أو كلمة المرور غير صحيحة',
             });
+        });
     };
 
     return (

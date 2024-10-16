@@ -60,7 +60,7 @@ function SignUp() {
             return;
         }
 
-        axios.post('https://67092a6aaf1a3998baa09cc6.mockapi.io/users', {
+        axios.post('http://localhost:4000/api/users/register', {
             name: inputs.name,
             email: inputs.email,
             password: inputs.password,

@@ -86,10 +86,61 @@ export const loginUser = async (req, res) => {
 
         
         const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-        res.json({ token });
+        res.json({ token , id: user._id, name: user.name});
     } catch (error) {
         console.error('Error during login:', error);
         res.status(500).json({ message: 'Server error' });
     }
 };
 
+export const getUser = async (req, res) => {
+    const { id } = req.params; // Get the user ID from the URL parameters
+
+    try {
+        // Find the user by ID
+        const user = await User.findById(id);
+
+        // If user not found, return a 404 error
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        // If user found, return user data (excluding password)
+        res.status(200).json({
+            id: user._id,
+            name: user.name,
+            email: user.email,
+            usertype: user.usertype,
+            // Add any other fields you want to return
+        });
+    } catch (error) {
+        console.error('Error fetching user:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+};
+
+export const getAllUsers = async (req, res) => {
+    try {
+        // Retrieve all users from the database
+        const users = await User.find();
+
+        // If no users are found, return an empty array
+        if (!users.length) {
+            return res.status(200).json([]);
+        }
+
+        // Return users' data (excluding sensitive information like passwords)
+        const userData = users.map(user => ({
+            id: user._id,
+            name: user.name,
+            email: user.email,
+            usertype: user.usertype,
+            // Add any other fields you want to return
+        }));
+
+        res.status(200).json(userData);
+    } catch (error) {
+        console.error('Error fetching users:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+};

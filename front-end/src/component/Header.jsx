@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 function Header() {
-  const URL = "https://67092a6aaf1a3998baa09cc6.mockapi.io/users";
+  const URL = "http://localhost:4000/api/users/user";
   const [usersInfo, setusersInfo] = useState([]);
 
   const getUsersInfo = () => {
@@ -13,6 +13,7 @@ function Header() {
         // handle success
         console.log(response.data);
         setusersInfo(response.data);
+        console.log("user info",response.data)
       })
       .catch(function (error) {
         // handle error
@@ -49,7 +50,7 @@ function Header() {
             className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow "
           >
             
-            {usersInfo.usertype == "user" ? (
+            {usersInfo.usertype == "student" ? (
               <>
                 <li>
                   <Link to="/user-home">الرئيسية</Link>
@@ -78,14 +79,16 @@ function Header() {
                     alt="user icon"
                     className="w-[70%] h-[70%]"
                     src={`${
-                      usersInfo.usertype == "user"
+                      usersInfo.usertype == "student"
                         ? "https://cdn-icons-png.freepik.com/256/16568/16568321.png?uid=R162205891&ga=GA1.1.1807813655.1726087175"
                         : "https://cdn-icons-png.freepik.com/256/13648/13648582.png?uid=R162205891&ga=GA1.1.1807813655.1726087175"
                     }`}
                   />
                 </div>
               </div>
-              <p className="text-sm">{usersInfo.name}</p>
+              <p className="text-sm">{usersInfo.name}
+              </p>
+
             </div>
             <li>
               <div className="flex justify-center items-center">
@@ -107,7 +110,7 @@ function Header() {
         </div>
         <div className="hidden lg:flex">
           <ul className="menu menu-horizontal px-1">
-            {usersInfo.usertype == "user" ? (
+            {usersInfo.usertype == "student" ? (
                 <>
                   <li>
                     <Link to="/user-home">الرئيسية</Link>
@@ -140,13 +143,14 @@ function Header() {
                 alt="user icon"
                 className="w-[80%] h-[80%]"
                 src={`${
-                  usersInfo.usertype == "user"
+                  usersInfo.usertype == "student"
                     ? "https://cdn-icons-png.freepik.com/256/16568/16568321.png?uid=R162205891&ga=GA1.1.1807813655.1726087175"
                     : "https://cdn-icons-png.freepik.com/256/13648/13648582.png?uid=R162205891&ga=GA1.1.1807813655.1726087175"
                 }`}
               />
             </div>
-            <p className="text-sm">{usersInfo.name}</p>
+            <p className="text-sm">{usersInfo.name}
+            </p>
           </div>
           <ul
             tabIndex={0}

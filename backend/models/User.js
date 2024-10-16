@@ -20,8 +20,10 @@ const userSchema = new mongoose.Schema({
         default: 'student',
         required: true,
     },
+    
     ideas: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Idea' }],
-});
+},
+{ timestamps: true });
 
 const User = mongoose.model('User', userSchema);
 
