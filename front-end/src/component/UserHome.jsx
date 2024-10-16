@@ -109,7 +109,7 @@ export default function UserHome() {
                     {/* Add Idea */}
                     <div className="mb-10">
                         <div className="flex justify-center lg:justify-start items-center">
-                            <h1 onClick={() => { setDisplayIdea("") }} className="text-4xl rounded-lg bg-white text-black w-fit p-3 font-semibold cursor-pointer hover:bg-slate-200">{addUpdate}</h1>
+                            <h1 onClick={() => { setDisplayIdea("") }} className="text-2xl rounded-lg bg-white text-black w-fit p-3 font-semibold cursor-pointer hover:bg-slate-200">{addUpdate}</h1>
                         </div>
                         <div className="flex justify-center items-center w-screen h-screen absolute top-0 right-0 bg-black opacity-95 z-10" style={{"display": displayIdea}}>
                             <div className="w-full md:w-3/4 lg:w-1/2 border-4 border-gray-300 p-10 rounded-lg">
@@ -123,22 +123,16 @@ export default function UserHome() {
                             </div>
                         </div>
                     </div>
-                    {/*== Add Idea ==*/}
-
-                    {/* ================================================================================================================================= */}
-                    {/* ================================================================================================================================= */}
-                    {/* ================================================================================================================================= */}
-
-                    {/* Show Ideas */}
+                  
                     <div className="flex flex-col-reverse gap-5 justify-center items-center">
                         {
                             users.filter((item) => item.state === "accepted" && item.idea != "").map((item, index) => {
                             return (
                                 <div key={index} className="w-full">
                                     <div className="rounded-lg p-3 flex flex-col bg-green-700 justify-between items-center md:flex-row ">
-                                        <p className="p-2 text-center overflow-auto text-white text-4xl font-semibold">{item.idea}</p>
+                                        <p className="p-2 text-right text-2xl overflow-auto text-white font-semibold">{item.idea}</p>
                                     
-                                        <p className="p-2 text-center text-white text-4xl font-semibold">الفكرة مقبولة</p>
+                                        <p className="p-2 text-center text-white font-semibold">الفكرة مقبولة</p>
                                     </div>
                                 </div>
                             )
