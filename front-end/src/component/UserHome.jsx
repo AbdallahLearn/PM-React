@@ -84,15 +84,28 @@ export default function UserHome() {
   //=== Submit Idea ===//
 
   // Add Or Update //
-  const userIdeas = users.filter((item) => item.user && item.user._id === id);
+  // const userIdeas = users.filter((item) => item.user && item.user._id === id);
 
-  userIdeas.forEach((item) => {
-    if (!item.idea || item.idea.trim() === "") {
-      addUpdate = "إضافة فكرة جديدة +";
-    } else {
-      addUpdate = "تعديل الفكرة";
-    }
-  });
+  // userIdeas.forEach((item) => {
+  //   if (!item.idea || item.idea.trim() === "") {
+  //     addUpdate = "إضافة فكرة جديدة +";
+  //   } else {
+  //     addUpdate = "تعديل الفكرة";
+  //   }
+  // });
+  const userIdeas = users.filter((item) => item.user && item.user._id === id);
+console.log('userIdeas', userIdeas);
+
+addUpdate = "إضافة فكرة جديدة +"; // Default value
+
+if (userIdeas.length > 0) {
+  // Check if any user's idea is non-empty
+  const hasValidIdea = userIdeas.some(item => item.idea && item.idea.trim() !== "");
+  
+  if (hasValidIdea) {
+    addUpdate = "تعديل الفكرة";
+  }
+}
   //=== Add Or Update ===//
   return (
     <div className="min-h-screen flex flex-col">
