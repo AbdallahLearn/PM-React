@@ -124,7 +124,7 @@ function SignUp() {
                     {!validity.password && <small className="text-red-600">يجب أن تتكون كلمة المرور من ٦ أحرف على الأقل</small>}
                 </div>
 
-                <div className="mt-6 flex justify-between">
+                {/* <div className="mt-6 flex justify-between">
                     <button
                         onClick={() => selectUserType('admin')}
                         className={`flex-1 mx-1 py-2 border border-transparent text-sm font-medium rounded-md text-white ${inputs.usertype === 'admin' ? 'bg-[#8f37ff]' : 'bg-gray-700'} hover:bg-[#7321cc] transition duration-300 ease-in-out`}
@@ -137,7 +137,7 @@ function SignUp() {
                     >
                         طالب
                     </button>
-                </div>
+                </div> */}
 
                 <div className="mt-6">
                     <span className="block w-full rounded-md shadow-sm">

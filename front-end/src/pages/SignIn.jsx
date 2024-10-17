@@ -48,18 +48,19 @@ function SignIn() {
         })
         .then((response) => {
             const result = response.data; // Directly use the response data
-            console.log('result', response)
+            console.log('result', response.data)
             if (result) {
-                localStorage.setItem('userId', result.id);
-                localStorage.setItem('username', result.name); // Assuming 'id' is returned
+                localStorage.setItem('userId', result.user._id);
+                localStorage.setItem('username', result.user.name); // Assuming 'id' is returned
                 localStorage.setItem('isLoggIn', true);
+                localStorage.setItem("token", result.token );
                 Swal.fire({
                     icon: 'success',
                     title: 'تم تسجيل الدخول بنجاح!',
                     showConfirmButton: false,
                     timer: 1500
                 });
-                if (result.usertype === "user") {
+                if (result.user.usertype === "student") {
                     navigate('/user-home');
                 } else {
                     navigate('/home');

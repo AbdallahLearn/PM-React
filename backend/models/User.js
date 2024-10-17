@@ -21,7 +21,7 @@ const userSchema = new mongoose.Schema({
         required: true,
     },
     
-    ideas: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Idea' }],
+    ideas: { type: mongoose.Schema.Types.ObjectId, ref: 'Idea' },
 },
 { timestamps: true });
 

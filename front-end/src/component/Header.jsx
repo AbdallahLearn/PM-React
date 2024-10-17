@@ -11,9 +11,9 @@ function Header() {
       .get(`${URL}/${localStorage.getItem("userId")}`)
       .then(function (response) {
         // handle success
-        console.log(response.data);
-        setusersInfo(response.data);
-        console.log("user info",response.data)
+        console.log(response.data.user);
+        setusersInfo(response.data.user);
+        console.log("user info",response.data.user)
       })
       .catch(function (error) {
         // handle error
