@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import Header from "../component/Header";
 import Footer from "../component/Footer";
 import { useNavigate } from "react-router-dom";
-
 import axios from "axios";
 
 function Students() {
-  const URL = "https://67092a6aaf1a3998baa09cc6.mockapi.io/users";
+  const URL = "http://localhost:4000/api/users/all-users";
+  const [showModal, setShowModal] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const [usersInfo, setusersInfo] = useState([]);
   const [userDetails, setUserDetails] = useState(null);
@@ -16,12 +16,9 @@ function Students() {
     axios
       .get(URL)
       .then(function (response) {
-        // handle success
-        console.log(response.data);
-        setusersInfo(response.data.filter((user) => user.usertype == "user"));
+        setusersInfo(response.data.filter((user) => user.usertype === "student"));
       })
       .catch(function (error) {
-        // handle error
         console.log(error);
       });
   };
@@ -32,20 +29,17 @@ function Students() {
 
   const handleDeleteButton = (id) => {
     axios.delete(`${URL}/${id}`).then((response) => {
-      console.log(response);
       getUsersInfo();
-      document.getElementById("deleteModal").close();
+      // document.getElementById("deleteModal").close();
+      setShowModal(false)
       setUserDetails(null);
     });
   };
 
   useEffect(() => {
-    // Check If User Is Logged In //
     if (localStorage.getItem("userId") === null) {
-      navigate("/signin"); // LogIn
-    };
-    //== Check If User Is Logged In ==//
-
+      navigate("/signin");
+    }
     getUsersInfo();
   }, []);
 
@@ -64,7 +58,7 @@ function Students() {
                 className="grow max-sm:w-[90%] w-[80%]"
                 placeholder="البحث عن طالب"
               />
-              {searchValue == "" && (
+              {searchValue === "" && (
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 16 16"
@@ -101,92 +95,48 @@ function Students() {
           <table className="table bg-gray-700 rounded-xl text-white overflow-hidden">
             <tbody>
               {searchedUser.length > 0 ? (
-                searchedUser.map((user, index) => {
-                  return (
-                    <tr key={index} className="hover:bg-gray-600">
-                      <td className="w-[90%]">
-                        <div className="flex justify-start items-center gap-3">
-                          <div className="w-8 h-8 min-h-8 rounded-full bg-white flex justify-center items-center">
-                            <img
-                              alt="user icon"
-                              className="w-[70%] h-[70%]"
-                              src="https://cdn-icons-png.freepik.com/256/16568/16568321.png?uid=R162205891&ga=GA1.1.1807813655.1726087175"
-                            />
-                          </div>
-                          <div className="flex flex-col ">
-                            <p>{user.name}</p>
-                            <p className="text-[0.7rem] text-gray-300">
-                              {user.email}
-                            </p>
-                          </div>
+                searchedUser.map((user, index) => (
+                  <tr key={index} className="hover:bg-gray-600">
+                    <td className="w-[90%]">
+                      <div className="flex justify-start items-center gap-3">
+                        <div className="w-8 h-8 min-h-8 rounded-full bg-white flex justify-center items-center">
+                          <img
+                            alt="user icon"
+                            className="w-[70%] h-[70%]"
+                            src="https://cdn-icons-png.freepik.com/256/16568/16568321.png?uid=R162205891&ga=GA1.1.1807813655.1726087175"
+                          />
                         </div>
-                      </td>
-                      <td className="w-[10%]">
-                        <div className="dropdown dropdown-left">
-                          <div className="btn w-10 h-10 min-h-10 btn-circle bg-transparent border-none shadow-none hover:bg-gray-400">
-                            <button
-                              onClick={() => {
-                                setUserDetails(user),
-                                  document
-                                    .getElementById("deleteModal")
-                                    .showModal  ();
-                              }}
-                            >
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                height="24px"
-                                viewBox="0 -960 960 960"
-                                width="24px"
-                                fill="#b91c1c"
-                              >
-                                <path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z" />
-                              </svg>
-                            </button>
-                          </div>
+                        <div className="flex flex-col ">
+                          <p>{user.name}</p>
+                          <p className="text-[0.7rem] text-gray-300">{user.email}</p>
                         </div>
-                        {userDetails && (
-                          <dialog
-                            id="deleteModal"
-                            className="modal modal-bottom sm:modal-middle overflow-x-hidden z-50"
+                      </div>
+                    </td>
+                    <td className="w-[10%]">
+                      <div className="dropdown dropdown-left">
+                        <div className="btn w-10 h-10 min-h-10 btn-circle bg-transparent border-none shadow-none hover:bg-gray-400">
+                          <button
+                            onClick={() => {
+                              setUserDetails(user);
+                              setShowModal(true);
+                              // document.getElementById("deleteModal").showModal();
+                            }}
                           >
-                            <div className="modal-box shadow-gray-400 shadow-sm">
-                              <p className="py-4 text-center text-lg">
-                                هل أنت متأكد من حذف الطالب {"  "}
-                                <span className="font-bold">
-                                  {userDetails.name}
-                                </span>
-                                ؟
-                              </p>
-                              <div className="flex justify-center items-center pt-8 gap-3">
-                                <button
-                                  onClick={() =>
-                                    handleDeleteButton(userDetails.id)
-                                  }
-                                  className="btn w-20 text-white bg-red-700 hover:bg-gray-400"
-                                >
-                                  حذف
-                                </button>
-                                <button
-                                  onClick={() =>
-                                    document
-                                      .getElementById("deleteModal")
-                                      .close()
-                                  }
-                                  className="btn w-20 text-white bg-gray-600 hover:bg-gray-400"
-                                >
-                                  إلغاء
-                                </button>
-                              </div>
-                            </div>
-                            <form method="dialog" className="modal-backdrop">
-                              <button>close</button>
-                            </form>
-                          </dialog>
-                        )}
-                      </td>
-                    </tr>
-                  );
-                })
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              height="24px"
+                              viewBox="0 -960 960 960"
+                              width="24px"
+                              fill="#b91c1c"
+                            >
+                              <path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z" />
+                            </svg>
+                          </button>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                ))
               ) : (
                 <tr>
                   <td className="text-center text-lg py-4">
@@ -197,6 +147,33 @@ function Students() {
             </tbody>
           </table>
         </div>
+        {userDetails && showModal && (
+          <dialog className="modal modal-bottom sm:modal-middle overflow-x-hidden z-50" open>
+            <div className="modal-box shadow-gray-400 shadow-sm">
+              <p className="py-4 text-center text-lg">
+                هل أنت متأكد من حذف الطالب {"  "}
+                <span className="font-bold">{userDetails.name}</span>؟
+              </p>
+              <div className="flex justify-center items-center pt-8 gap-3">
+                <button
+                  onClick={() => handleDeleteButton(userDetails._id)}
+                  className="btn w-20 text-white bg-red-700 hover:bg-gray-400"
+                >
+                  حذف
+                </button>
+                <button
+                  onClick={() => setShowModal(false)}
+                  className="btn w-20 text-white bg-gray-600 hover:bg-gray-400"
+                >
+                  إلغاء
+                </button>
+              </div>
+            </div>
+            <form method="dialog" className="modal-backdrop">
+              <button>close</button>
+            </form>
+          </dialog>
+        )}
       </div>
       <Footer />
     </div>

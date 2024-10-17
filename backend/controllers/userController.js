@@ -56,7 +56,7 @@ export const registerUser = async (req, res) => {
 
 
 export const authenticateToken = (req, res, next) => {
-    const token = req.headers['authorization']?.split(' ')[1]; 
+    const token = req.headers['authorization'];
     if (!token) return res.sendStatus(401);
 
     jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
@@ -86,7 +86,7 @@ export const loginUser = async (req, res) => {
 
         
         const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-        res.json({ token , id: user._id, name: user.name});
+        res.json({token,user});
     } catch (error) {
         console.error('Error during login:', error);
         res.status(500).json({ message: 'Server error' });
@@ -98,7 +98,7 @@ export const getUser = async (req, res) => {
 
     try {
         // Find the user by ID
-        const user = await User.findById(id);
+        const user = await User.findById(id).populate("ideas");
 
         // If user not found, return a 404 error
         if (!user) {
@@ -106,13 +106,14 @@ export const getUser = async (req, res) => {
         }
 
         // If user found, return user data (excluding password)
-        res.status(200).json({
-            id: user._id,
-            name: user.name,
-            email: user.email,
-            usertype: user.usertype,
-            // Add any other fields you want to return
-        });
+        // res.status(200).json({
+        //     id: user._id,
+        //     name: user.name,
+        //     email: user.email,
+        //     usertype: user.usertype,
+        //     // Add any other fields you want to return
+        // });
+        res.status(200).json({user});
     } catch (error) {
         console.error('Error fetching user:', error);
         res.status(500).json({ message: 'Internal server error' });
@@ -130,17 +131,37 @@ export const getAllUsers = async (req, res) => {
         }
 
         // Return users' data (excluding sensitive information like passwords)
-        const userData = users.map(user => ({
-            id: user._id,
-            name: user.name,
-            email: user.email,
-            usertype: user.usertype,
-            // Add any other fields you want to return
-        }));
+        // const userData = users.map(user => ({
+        //     id: user._id,
+        //     name: user.name,
+        //     email: user.email,
+        //     usertype: user.usertype,
+        //     // Add any other fields you want to return
+        // }));
 
-        res.status(200).json(userData);
+        res.status(200).json(users);
     } catch (error) {
         console.error('Error fetching users:', error);
         res.status(500).json({ message: 'Internal server error' });
+    }
+};
+
+
+export const deleteUser = async (req, res) => {
+    const userId = req.params.id; // Assuming the user ID is passed as a URL parameter
+
+    try {
+        // Check if the user exists
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        // Delete the user
+        await User.findByIdAndDelete(userId);
+        res.status(200).json({ message: 'User deleted successfully' });
+    } catch (error) {
+        console.error('Error deleting user:', error);
+        res.status(500).json({ message: 'Server error', error: error.message });
     }
 };

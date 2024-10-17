@@ -5,149 +5,112 @@ import Header from "./Header";
 import Footer from "./Footer";
 
 export default function UserProfile() {
-  // URl From The Api //
-  const url = "http://localhost:4000/api/ideas/";
-  //=== URl From The Api ===//
-
-  // LocalStorge //
+  const url = "http://localhost:4000/api/all-ideas";
+  const userURL = "http://localhost:4000/api/users/user/";
   const id = localStorage.getItem("userId");
-  //=== LocalStorge ===//
+  const token = localStorage.getItem("token");
 
-  // Navigate //
   const navigate = useNavigate();
-  //=== Navigate ===//
 
-  // Use State //
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState({});
   const [idea, setIdea] = useState("");
-  // const [ideas, setIdeas] = useState([]);
   const [displayIdea, setDisplayIdea] = useState("none");
-  //=== Use State ===//
+  const [showModal, setShowModal] = useState(false);
 
-  // Get Ideas //
   const getIdeas = () => {
     axios
-      .get(url + id)
+      .get(userURL + id)
       .then((response) => {
-        // handle success
-        console.log(response.data);
-        setUsers(response.data);
+        setUsers(response.data.user);
       })
       .catch((error) => {
-        // handle error
         console.log(error);
       });
   };
-  //=== Get Ideas ===//
 
-  // Use Effect //
   useEffect(() => {
-    // Check If User Is Logged In //
     if (localStorage.getItem("userId") === null) {
-      navigate("/signin"); // LogIn
+      navigate("/signin");
     }
-    //== Check If User Is Logged In ==//
-
-    // =================================================================================================================================== //
-    // =================================================================================================================================== //
-
-    // Get Ideas //
     getIdeas();
-    //== Get Ideas ==//
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  //=== Use Effect ===//
 
-  // Submit Idea //
   const submitIdea = () => {
-    if (users.id == id) {
-      if (idea.trim() != "" && users.idea != idea) {
-        axios
-          .post(url + users.id, {
-            id: users.id,
-            idea: idea
-          })
-          .then(function (response) {
-            console.log(response);
-            window.location.reload();
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-      }
-    }
-  };
-  //=== Submit Idea ===//
-
-  // Submit Delete //
-  const submiteDel = () => {
-    if (users.id == id) {
+    if (users._id === id && idea.trim() !== "") {
       axios
-        .put(url + users.id, {
-          id: users.id,
-          name: users.name,
-          email: users.email,
-          password: users.password,
-          state: users.state,
-          usertype: users.usertype,
-          idea: "",
-        })
-        .then(function (response) {
+        .post(
+          url,
+          { idea: idea },
+          {
+            headers: {
+              Authorization: token,
+            },
+          }
+        )
+        .then((response) => {
           console.log(response);
-          window.location.reload();
+          getIdeas();
         })
-        .catch(function (error) {
+        .catch((error) => {
           console.log(error);
         });
     }
   };
-  //=== Submit Delete ===//
 
-  // Background-color For Card //
+  const submitDel = () => {
+    if (users._id === id && users.ideas) {
+      axios
+        .patch(`${url}/${users.ideas._id}`, {
+          idea: " ", // Clear the idea if needed
+          status: "rejected",
+        })
+        .then((response) => {
+          console.log(response);
+          getIdeas();
+        })
+        .catch((error) => {
+          console.log(
+            "Error deleting idea:",
+            error.response ? error.response.data : error.message
+          );
+        });
+    }
+  };
+
   let bgCard;
   let state;
 
-  if (users.state == "accepted") {
+  if (users.ideas?.status === "accepted") {
     bgCard = "rgba(21, 128, 61, 1)";
-    state = "الفكرة مقبولة";
-  } else if (users.state == "Reject") {
-    bgCard = "rgba(185, 28, 28, 1)";
-    state = "الفكرة مرفوضة";
+    state = "مقبولة";
+  } else if (users.ideas?.status === "rejected") {
+    bgCard = "rgba(156, 163, 175, 1)";
+    state = "مرفوضة";
+  } else if (users.ideas?.status === "edited") {
+    bgCard = "rgba(0, 0, 255, 1)";
+    state = "معدلة";
   } else {
     bgCard = "rgba(156, 163, 175, 1)";
-    state = "انتظار";
+    state = "معلقة";
   }
-  //== Background-color For Card ==//
 
-  // Show Card Or Not //
-  let display;
-  let addUpdate;
+  let display =
+    users.ideas?.idea && users.ideas.idea.trim() !== "" ? "block" : "none";
+  let addUpdate =
+    users.ideas?.idea && users.ideas.idea.trim() !== ""
+      ? "تعديل الفكرة"
+      : "إضافة فكرة جديدة +";
 
-  if (users.idea == "") {
-    //
-    display = "none";
-    addUpdate = "إضافة فكرة جديدة +";
-  } else {
-    display = "block";
-    addUpdate = "تعديل الفكرة";
-  }
-  //== Show Card Or Not ==//
-
-  const [showModal, setShowModal] = useState(false);
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
-
-      {/* Cards Of Users */}
       <div className="flex-grow flex flex-col items-center">
         <div className="container mx-auto py-10">
-          {/* Add Idea */}
           <div className="mb-10">
             <div className="flex justify-center lg:justify-start items-center">
               <h1
-                onClick={() => {
-                  setDisplayIdea("");
-                }}
+                onClick={() => setDisplayIdea("")}
                 className="text-2xl rounded-lg bg-white text-black w-fit p-3 font-semibold cursor-pointer hover:bg-slate-200"
               >
                 {addUpdate}
@@ -155,33 +118,29 @@ export default function UserProfile() {
             </div>
 
             <div
-              className="flex justify-center items-center w-screen h-screen absolute top-0 right-0 bg-black opacity-95 z-10"
+              className="flex justify-center items-center w-screen h-screen absolute top-0 right-0 z-10"
               style={{ display: displayIdea }}
             >
-              <div className="w-full md:w-3/4 lg:w-1/2 border-4 border-gray-300 p-10 rounded-lg">
+              <div className="w-full md:w-3/4 lg:w-1/2 shadow-gray-400 shadow-sm bg-base-100 p-10 rounded-lg">
                 <div>
                   <textarea
-                    onChange={(e) => {
-                      setIdea(e.target.value);
-                    }}
+                    onChange={(e) => setIdea(e.target.value)}
                     value={idea}
                     className="p-3 rounded-xl w-full focus:outline-none focus:ring-2 focus:ring-gray-500 break-words resize-none text-xl text-white mb-3"
                     rows={2}
                     placeholder="اكتب الفكرة ..."
                   ></textarea>
                 </div>
-                <div className="card-actions justify-between items-center">
+                <div className="card-actions flex justify-center items-center pt-8 gap-3">
                   <button
-                    onClick={() => {
-                      setDisplayIdea("none");
-                    }}
-                    className="btn bg-white text-xl text-black font-bold"
+                    onClick={() => setDisplayIdea("none")}
+                    className="btn text-xl text-white"
                   >
-                    الغاء
+                    إلغاء
                   </button>
                   <button
                     onClick={submitIdea}
-                    className="btn bg-white text-xl text-black font-bold"
+                    className="btn bg-green-700 text-xl text-white"
                   >
                     إرسال
                   </button>
@@ -191,47 +150,39 @@ export default function UserProfile() {
           </div>
 
           <div className="grid grid-cols-1 grid-flow-row gap-10 justify-items-center content-center">
-            <div className="w-full md:w-3/4 lg:w-1/2">
-              <div className="card card-compact shadow-xl">
+            <div className="w-full flex justify-center items-center md:w-3/4 lg:w-1/2">
+              <div className="relative w-96">
                 <div
-                  className="card-body rounded-lg"
-                  style={{ backgroundColor: bgCard, display: display }}
+                  className="card-body rounded-lg bg-gray-200 h-full text-black border-t-[2rem] "
+                  style={{ borderTopColor: bgCard, display }}
                 >
-                  <h2
-                    className="card-title text-2xl  text-white"
-                    style={{ backgroundColor: bgCard }}
-                  >
-                    {users.name}
-                  </h2>
-
                   <p
-                    className="w-full p-3 text-center text-white text-2xl font-bold mt-10"
-                    style={{
-                      backgroundColor: bgCard,
-                      wordWrap: "break-word", // Allows long words to break to the next line
-                      overflowWrap: "break-word", // Ensures wrapping behavior in all cases
-                      whiteSpace: "normal", // Allows text to wrap onto the next line
-                    }}
-                  >
-                    {users.idea}
-                  </p>
-
-                  <p
-                    className="w-full p-3 text-center overflow-auto text-white text-xl font-semibold my-10"
-                    style={{ backgroundColor: bgCard }}
+                    className="absolute -top-12 left-2 text-[0.9rem] w-full p-3 text-left overflow-auto text-xl font-semibold my-10"
+                    // style={{ backgroundColor: bgCard }}
                   >
                     {state}
                   </p>
+                  <h2 className="card-title text-2xl">{users.name}</h2>
+
+                  <p
+                    className="w-full p-3 text-center text-2xl font-bold mt-10"
+                    style={{
+                      // backgroundColor: bgCard,
+                      wordWrap: "break-word",
+                      overflowWrap: "break-word",
+                      whiteSpace: "normal",
+                    }}
+                  >
+                    {users.ideas?.idea}
+                  </p>
 
                   <div
-                    className="card-actions justify-between"
-                    style={{ backgroundColor: bgCard }}
+                    className="card-actions flex justify-center items-center"
+                    // style={{ backgroundColor: bgCard }}
                   >
                     <button
-                      onClick={() => {
-                        setShowModal(true);
-                      }}
-                      className="w-full btn bg-white text-2xl text-black font-bold"
+                      onClick={() => setShowModal(true)}
+                      className="w-24 btn mt-14 border-none bg-red-700 text-lg text-white"
                     >
                       حذف
                     </button>
@@ -247,7 +198,7 @@ export default function UserProfile() {
                           </p>
                           <div className="flex justify-center items-center p-10 gap-3">
                             <button
-                              onClick={submiteDel}
+                              onClick={submitDel}
                               className="btn w-20 text-white bg-red-700 hover:bg-gray-400"
                             >
                               حذف
@@ -267,11 +218,8 @@ export default function UserProfile() {
               </div>
             </div>
           </div>
-          {/*== Show Ideas ==*/}
         </div>
       </div>
-      {/* Cards Of Users */}
-
       <Footer />
     </div>
   );

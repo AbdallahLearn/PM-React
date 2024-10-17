@@ -1,12 +1,13 @@
 import express from 'express';
-import { createIdea,updateIdea } from '../controllers/ideaController.js';
+import { createIdea,updateIdea, getAllIdeas } from '../controllers/ideaController.js';
 import { authenticateToken } from '../controllers/userController.js';
 
 const router = express.Router();
 
 
-router.post('/ideas',authenticateToken,createIdea);
-router.patch('/ideas/:id', updateIdea)
-
+router.post('/all-ideas',authenticateToken,createIdea);
+router.patch('/all-ideas/:id', updateIdea)
+router.get('/all-ideas',getAllIdeas);
+// router.put('/all-ideas/:id',getIdea);
 
 export default router;
