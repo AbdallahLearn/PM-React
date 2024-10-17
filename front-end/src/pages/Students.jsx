@@ -129,7 +129,7 @@ function Students() {
                                 setUserDetails(user),
                                   document
                                     .getElementById("deleteModal")
-                                    .showModal();
+                                    .showModal  ();
                               }}
                             >
                               <svg
