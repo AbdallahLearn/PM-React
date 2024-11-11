@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function Students() {
-  const URL = "http://localhost:4000/api/users/all-users";
+  const URL = "https://pm-react.onrender.com/api/users/all-users";
   const [showModal, setShowModal] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const [usersInfo, setusersInfo] = useState([]);

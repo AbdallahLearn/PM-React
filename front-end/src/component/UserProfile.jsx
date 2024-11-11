@@ -5,8 +5,8 @@ import Header from "./Header";
 import Footer from "./Footer";
 
 export default function UserProfile() {
-  const url = "http://localhost:4000/api/all-ideas";
-  const userURL = "http://localhost:4000/api/users/user/";
+  const url = "https://pm-react.onrender.com/api/all-ideas";
+  const userURL = "https://pm-react.onrender.com/api/users/user/";
   const id = localStorage.getItem("userId");
   const token = localStorage.getItem("token");
 

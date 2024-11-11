@@ -5,7 +5,7 @@ import Header from "./Header";
 import Footer from "./Footer";
 export default function UserHome() {
   // URl From The Api //
-  const url = "http://localhost:4000/api/all-ideas";
+  const url = "https://pm-react.onrender.com/api/all-ideas";
   //=== URl From The Api ===//
 
   // LocalStorge //

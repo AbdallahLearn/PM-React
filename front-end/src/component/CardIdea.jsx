@@ -12,7 +12,7 @@ function CardIdea() {
   const [itemToDelete, setItemToDelete] = useState(null);
   const [editingId, setEditingId] = useState(null);
   const [currentIdea, setCurrentIdea] = useState("");
-  const url = `http://localhost:4000/api/all-ideas`;
+  const url = `https://pm-react.onrender.com/api/all-ideas`;
   const navigate = useNavigate(); // Create navigate function
 
   const getAllIdeas = () => {

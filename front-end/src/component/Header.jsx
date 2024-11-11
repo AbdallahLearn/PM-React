@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 function Header() {
-  const URL = "http://localhost:4000/api/users/user";
+  const URL = "https://pm-react.onrender.com/api/users/user";
   const [usersInfo, setusersInfo] = useState([]);
 
   const getUsersInfo = () => {
